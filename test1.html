@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiAsset Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #3a86ff;
+            --light-blue: #a2d2ff;
+            --soft-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --dark-gray: #6c757d;
+            --white: #ffffff;
+            --amber: #ffb703;
+            --success: #38b000;
+            --warning: #ff9500;
+            --danger: #e63946;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 50%, #f8f9fa 100%);
+            color: #333;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .user-profile {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+        
+        .profile-icon:hover {
+            transform: scale(1.05);
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            width: 180px;
+            padding: 10px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+        }
+        
+        .user-profile:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu ul {
+            list-style: none;
+        }
+        
+        .dropdown-menu li {
+            padding: 10px 20px;
+            transition: var(--transition);
+        }
+        
+        .dropdown-menu li:hover {
+            background-color: var(--soft-gray);
+        }
+        
+        .dropdown-menu i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        /* Summary Cards */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card.dormant:hover {
+            box-shadow: 0 8px 20px rgba(255, 183, 3, 0.3);
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        
+        .card.total .card-icon {
+            background-color: rgba(58, 134, 255, 0.15);
+            color: var(--primary-blue);
+        }
+        
+        .card.dormant .card-icon {
+            background-color: rgba(255, 183, 3, 0.15);
+            color: var(--amber);
+        }
+        
+        .card.active .card-icon {
+            background-color: rgba(56, 176, 0, 0.15);
+            color: var(--success);
+        }
+        
+        .card.value-lost .card-icon {
+            background-color: rgba(230, 57, 70, 0.15);
+            color: var(--danger);
+        }
+        
+        .card-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 5px 0;
+        }
+        
+        .card-label {
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+        
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background-color: var(--white);
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .filter-title {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .filter-select {
+            padding: 8px 15px;
+            border-radius: 6px;
+            border: 1px solid var(--medium-gray);
+            background-color: var(--white);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-select:hover {
+            border-color: var(--primary-blue);
+        }
+        
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .chart-container {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .chart-container:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .chart-legend {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .legend-active {
+            background-color: var(--success);
+        }
+        
+        .legend-dormant {
+            background-color: var(--amber);
+        }
+        
+        .chart-placeholder {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--soft-gray);
+            border-radius: 8px;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .area-chart {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .pie-chart {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--success) 0% 65%,
+                var(--amber) 65% 100%
+            );
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .pie-center {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        /* Data Table */
+        .data-table-section {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 2px solid var(--medium-gray);
+            color: var(--dark-gray);
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--medium-gray);
+            transition: var(--transition);
+        }
+        
+        tr:hover td {
+            background-color: rgba(58, 134, 255, 0.05);
+        }
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background-color: rgba(56, 176, 0, 0.15);
+            color: var(--success);
+        }
+        
+        .status-dormant {
+            background-color: rgba(255, 183, 3, 0.15);
+            color: var(--amber);
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--primary-blue);
+            cursor: pointer;
+            font-size: 16px;
+            transition: var(--transition);
+            padding: 5px;
+            border-radius: 4px;
+        }
+        
+        .action-btn:hover {
+            background-color: rgba(58, 134, 255, 0.1);
+        }
+        
+        /* Banner */
+        .banner {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
+            border-radius: 12px;
+            padding: 30px;
+            color: white;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .banner-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .banner-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .delay-4 { animation-delay: 0.4s; opacity: 0; }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .summary-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .filters {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            <span>OptiAsset</span>
+        </div>
+        <div class="user-profile">
+            <div class="profile-icon">StarLink</div>
+            <div class="dropdown-menu">
+                <ul>
+                    <li><i class="fas fa-user-cog"></i> Profile Settings</li>
+                    <li><i class="fas fa-cog"></i> Dashboard Settings</li>
+                    <li><i class="fas fa-sign-out-alt"></i> Logout</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <div class="card total fade-in">
+                <div class="card-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+                <div class="card-value">1,247</div>
+                <div class="card-label">Total Assets</div>
+            </div>
+            
+            <div class="card dormant fade-in delay-1">
+                <div class="card-icon">
+                    <i class="fas fa-bed"></i>
+                </div>
+                <div class="card-value">183</div>
+                <div class="card-label">Dormant Assets</div>
+            </div>
+            
+            <div class="card active fade-in delay-2">
+                <div class="card-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="card-value">964</div>
+                <div class="card-label">Active Assets</div>
+            </div>
+            
+            <div class="card value-lost fade-in delay-3">
+                <div class="card-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="card-value">$42,580</div>
+                <div class="card-label">Estimated Value Lost</div>
+            </div>
+        </div>
+        
+        <!-- Filter Bar -->
+        <div class="filter-bar fade-in delay-4">
+            <div class="filter-title">Asset Overview</div>
+            <div class="filters">
+                <select class="filter-select" id="time-range">
+                    <option>Last 30 days</option>
+                    <option>Last Quarter</option>
+                    <option>Last 6 Months</option>
+                    <option>Last Year</option>
+                </select>
+                
+                <select class="filter-select" id="asset-category">
+                    <option>All Categories</option>
+                    <option>Servers</option>
+                    <option>Laptops</option>
+                    <option>Peripherals</option>
+                    <option>Network Devices</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-container fade-in">
+                <div class="chart-header">
+                    <div class="chart-title">Asset Activity Over Time</div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <div class="legend-color legend-active"></div>
+                            <span>Active</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color legend-dormant"></div>
+                            <span>Dormant</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-placeholder">
+                    <div class="area-chart" id="area-chart">
+                        <!-- Area chart would be rendered here with a library like Chart.js in a real implementation -->
+                        <div style="display: flex; align-items: flex-end; height: 100%; padding: 0 20px; gap: 10px;">
+                            <div style="flex: 1; background: linear-gradient(to top, var(--success) 0%, rgba(56, 176, 0, 0.3) 100%); height: 80%; border-radius: 4px 4px 0 0;"></div>
+                            <div style="flex: 1; background: linear-gradient(to top, var(--success) 0%, rgba(56, 176, 0, 0.3) 100%); height: 85%; border-radius: 4px 4px 0 0;"></div>
+                            <div style="flex: 1; background: linear-gradient(to top, var(--success) 0%, rgba(56, 176, 0, 0.3) 100%); height: 70%; border-radius: 4px 4px 0 0;"></div>
+                            <div style="flex: 1; background: linear-gradient(to top, var(--success) 0%, rgba(56, 176, 0, 0.3) 100%); height: 90%; border-radius: 4px 4px 0 0;"></div>
+                            <div style="flex: 1; background: linear-gradient(to top, var(--success) 0%, rgba(56, 176, 0, 0.3) 100%); height: 75%; border-radius: 4px 4px 0 0;"></div>
+                            <div style="flex: 1; background: linear-gradient(to top, var(--success) 0%, rgba(56, 176, 0, 0.3) 100%); height: 82%; border-radius: 4px 4px 0 0;"></div>
+                            <div style="flex: 1; background: linear-gradient(to top, var(--success) 0%, rgba(56, 176, 0, 0.3) 100%); height: 88%; border-radius: 4px 4px 0 0;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-container fade-in delay-1">
+                <div class="chart-header">
+                    <div class="chart-title">Asset Status Distribution</div>
+                </div>
+                <div class="chart-placeholder" style="justify-content: center;">
+                    <div class="pie-chart">
+                        <div class="pie-center">65% Active</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Data Table -->
+        <div class="data-table-section fade-in delay-2">
+            <div class="table-header">
+                <div class="section-title">Asset Details</div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Asset Name</th>
+                        <th>Last Activity</th>
+                        <th>Current Status</th>
+                        <th>Recommended Action</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Database Server #12</td>
+                        <td>2 hours ago</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>Monitor Performance</td>
+                        <td><button class="action-btn"><i class="fas fa-ellipsis-v"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>Developer Laptop - John D.</td>
+                        <td>5 days ago</td>
+                        <td><span class="status-badge status-dormant">Dormant</span></td>
+                        <td>Check Usage</td>
+                        <td><button class="action-btn"><i class="fas fa-ellipsis-v"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>Network Switch - Floor 3</td>
+                        <td>1 hour ago</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>No Action Needed</td>
+                        <td><button class="action-btn"><i class="fas fa-ellipsis-v"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>Backup Server #4</td>
+                        <td>3 weeks ago</td>
+                        <td><span class="status-badge status-dormant">Dormant</span></td>
+                        <td>Consider Decommissioning</td>
+                        <td><button class="action-btn"><i class="fas fa-ellipsis-v"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>Marketing Printer</td>
+                        <td>2 hours ago</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>Monitor Usage</td>
+                        <td><button class="action-btn"><i class="fas fa-ellipsis-v"></i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Banner -->
+        <div class="banner fade-in delay-3">
+            <div class="banner-title">Unlock the hidden value of your infrastructure</div>
+            <div class="banner-subtitle">Reactivating or selling dormant assets could recover an estimated $42,580 in value</div>
+        </div>
+    </div>
+
+    <script>
+        // Simple animation for chart updates when filters change
+        document.querySelectorAll('.filter-select').forEach(select => {
+            select.addEventListener('change', function() {
+                // In a real implementation, this would fetch new data and update charts
+                // For demo purposes, we'll just add a visual effect
+                const charts = document.querySelectorAll('.chart-container');
+                charts.forEach(chart => {
+                    chart.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        chart.style.transform = 'scale(1)';
+                    }, 300);
+                });
+            });
+        });
+        
+        // Action button click effect
+        document.querySelectorAll('.action-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.backgroundColor = 'rgba(58, 134, 255, 0.2)';
+                setTimeout(() => {
+                    this.style.backgroundColor = '';
+                }, 300);
+            });
+        });
+        
+        // Add animation to cards on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
