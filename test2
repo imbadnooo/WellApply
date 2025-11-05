@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventaire des Actifs Dormants - OptiA7</title>
+    <!-- Chargement de Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Utilisation de la police Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .sidebar { background-color: #111827; }
+        .sidebar-item { color: #d1d5db; }
+        .sidebar-item:hover { background-color: #374151; color: #ffffff; }
+        /* Style pour l'onglet actif "Mes Actifs", basé sur vos images */
+        .sidebar-item-active { background-color: #4f46e5; color: #ffffff; font-weight: 600; }
+        
+        .table-row-hover:hover {
+            background-color: #f9fafb;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="flex h-screen">
+        <!-- 
+        BARRE LATERALE
+        Fidèle à vos captures d'écran (OptiA7, icônes, etc.)
+        -->
+        <aside class="w-64 sidebar text-white flex flex-col fixed h-full shadow-2xl z-10">
+            <div class="h-20 flex items-center justify-center border-b border-gray-700">
+                <h1 class="text-3xl font-extrabold text-white">Opti<span class="text-indigo-400">A7</span></h1>
+            </div>
+            
+            <nav class="flex-1 mt-6 px-4 space-y-2">
+                <!-- 1. Dashboard -->
+                <a href="#" class="flex items-center px-4 py-3 rounded-md transition-all duration-200 sidebar-item">
+                    <svg class="h-6 w-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                    Dashboard
+                </a>
+                
+                <!-- 2. Mes Actifs (Actif) -->
+                <a href="#" class="flex items-center px-4 py-3 rounded-md transition-all duration-200 sidebar-item-active">
+                    <svg class="h-6 w-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    Mes Actifs
+                </a>
+                
+                <!-- 3. Analyse & Stratégie -->
+                <a href="#" class="flex items-center px-4 py-3 rounded-md transition-all duration-200 sidebar-item">
+                    <svg class="h-6 w-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                    Analyse & Stratégie
+                </a>
+
+                <!-- 4. Rapports -->
+                <a href="#" class="flex items-center px-4 py-3 rounded-md transition-all duration-200 sidebar-item">
+                    <svg class="h-6 w-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2z" />
+                    </svg>
+                    Rapports
+                </a>
+            </nav>
+            
+            <nav class="mt-auto p-4 border-t border-gray-700 space-y-2">
+                 <a href="#" class="flex items-center px-4 py-3 rounded-md transition-all duration-200 sidebar-item text-sm">
+                    <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                    Intégrations
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 rounded-md transition-all duration-200 sidebar-item text-sm">
+                    <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924-1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.096 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    Paramètres
+                </a>
+            </nav>
+        </aside>
+
+        <!-- 
+        CONTENU PRINCIPAL
+        Inspiré de la première version : simple, un tableau, un CTA.
+        -->
+        <main class="ml-64 flex-1 p-8 lg:p-10 overflow-y-auto">
+            
+            <!-- 1. En-tête de page simple -->
+            <header class="flex flex-col sm:flex-row justify-between sm:items-center mb-8">
+                <h2 class="text-3xl font-extrabold text-gray-900">
+                    Inventaire des Actifs Dormants
+                </h2>
+                <div class="mt-4 sm:mt-0">
+                    <button class="w-full sm:w-auto bg-white text-gray-700 px-4 py-2 rounded-lg shadow-sm border border-gray-300 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 flex items-center justify-center font-medium">
+                        <svg class="h-5 w-5 mr-2 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        Exporter la Liste
+                    </button>
+                </div>
+            </header>
+
+            <!-- 2. Filtres (simplifiés) -->
+            <div class="mb-4 flex space-x-2">
+                <input type="text" placeholder="Rechercher (Nom, Specs...)" class="w-1/2 px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200">
+                <select class="w-1/4 px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200">
+                    <option value="">Tous les types</option>
+                    <option value="laptop">Ordinateur Portable</option>
+                    <option value="server">Serveur</option>
+                    <option value="mobile">Mobile</option>
+                </select>
+                <select class="w-1/4 px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200">
+                    <option value="">Tous les statuts</option>
+                    <option value="dormant">Dormant</option>
+                    <option value="obsolete">Obsolète</option>
+                </select>
+            </div>
+
+            <!-- 
+            3. "Rich Table" (Le tableau avec les specs, comme demandé)
+            MODIFICATION: Ajout de 'max-h-[500px] overflow-y-auto' pour un corps de tableau scrollable 
+            et 'relative' pour le positionnement de l'en-tête.
+            -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 max-h-[500px] overflow-y-auto relative">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <!-- MODIFICATION: Ajout de 'sticky top-0 z-10' pour un en-tête fixe -->
+                    <thead class="bg-gray-50 sticky top-0 z-10">
+                        <tr>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Actif</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Spécifications</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Date d'Achat</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Statut</th>
+                            <th scope="col" class="relative px-6 py-4"><span class="sr-only">Action</span></th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        
+                        <!-- Actif 1: Dormant -->
+                        <tr class="table-row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center text-gray-500" title="Ordinateur Portable">
+                                        <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-semibold text-gray-900">Dell XPS 15 9500</div>
+                                        <div class="text-sm text-gray-500">SN: G5J-498B</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <div class="text-gray-900"><span class="font-medium text-gray-500">CPU:</span> Intel i7-10750H</div>
+                                <div class="text-gray-900"><span class="font-medium text-gray-500">RAM:</span> 16 Go DDR4</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">12/03/2020</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                    Dormant
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold">
+                                <a href="#" class="text-indigo-600 hover:text-indigo-900 transition-colors duration-200">Analyser</a>
+                            </td>
+                        </tr>
+                        
+                        <!-- Actif 2: Obsolète -->
+                        <tr class="table-row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center text-gray-500" title="Serveur">
+                                        <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11l7-7 7 7M5 19l7-7 7 7" /></svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-semibold text-gray-900">HP ProLiant DL380 G10</div>
+                                        <div class="text-sm text-gray-500">SN: HPL-90A1</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <div class="text-gray-900"><span class="font-medium text-gray-500">CPU:</span> 2x Xeon Silver 4110</div>
+                                <div class="text-gray-900"><span class="font-medium text-gray-500">RAM:</span> 64 Go ECC DDR4</div>
+                            </td>
+                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">22/07/2018</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                    Obsolète
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold">
+                                <a href="#" class="text-indigo-600 hover:text-indigo-900 transition-colors duration-200">Analyser</a>
+                            </td>
+                        </tr>
+
+                        <!-- Actif 3: Dormant -->
+                        <tr class="table-row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center text-gray-500" title="Mobile">
+                                        <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-semibold text-gray-900">iPhone 12 Pro</div>
+                                        <div class="text-sm text-gray-500">IMEI: 356...901</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <div class="text-gray-900"><span class="font-medium text-gray-500">Stock:</span> 256 Go</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">05/11/2020</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                    Dormant
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold">
+                                <a href="#" class="text-indigo-600 hover:text-indigo-900 transition-colors duration-200">Analyser</a>
+                            </td>
+                        </tr>
+                        
+                        <!-- AJOUT: Données supplémentaires pour le scroll -->
+                        
+                        <!-- Actif 4: Dormant -->
+                        <tr class="table-row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center text-gray-500" title="Ordinateur Portable">
+                                        <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-semibold text-gray-900">MacBook Pro 16"</div>
+                                        <div class="text-sm text-gray-500">SN: C02-456B</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <div class="text-gray-900"><span class="font-medium text-gray-500">CPU:</span> Apple M1 Pro</div>
+                                <div class="text-gray-900"><span class="font-medium text-gray-500">RAM:</span> 16 Go Unifiée</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">01/02/2021</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                    Dormant
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold">
+                                <a href="#" class="text-indigo-600 hover:text-indigo-900 transition-colors duration-200">Analyser</a>
+                            </td>
+                        </tr>
+
+                        <!-- Actif 5: Obsolète -->
+                        <tr class="table-row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center text-gray-500" title="Ordinateur Portable">
+                                        <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-semibold text-gray-900">Lenovo ThinkPad T480</div>
+                                        <div class="text-sm text-gray-500">SN: LNV-789C</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <div class="text-gray-900"><span class="font-medium text-gray-500">CPU:</span> Intel i5-8250U</div>
+                                <div class="text-gray-900"><span class="font-medium text-gray-500">RAM:</span> 8 Go DDR4</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">30/05/2019</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                    Obsolète
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold">
+                                <a href="#" class="text-indigo-600 hover:text-indigo-900 transition-colors duration-200">Analyser</a>
+                            </td>
+                        </tr>
+
+                        <!-- Actif 6: Dormant (Mobile) -->
+                        <tr class="table-row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center text-gray-500" title="Mobile">
+                                        <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-semibold text-gray-900">Samsung Galaxy S20</div>
+                                        <div class="text-sm text-gray-500">IMEI: 457...123</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <div class="text-gray-900"><span class="font-medium text-gray-500">Stock:</span> 128 Go</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">10/08/2020</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                    Dormant
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold">
+                                <a href="#" class="text-indigo-600 hover:text-indigo-900 transition-colors duration-200">Analyser</a>
+                            </td>
+                        </tr>
+                        
+                        <!-- Actif 7: Dormant (Laptop) -->
+                        <tr class="table-row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center text-gray-500" title="Ordinateur Portable">
+                                        <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-semibold text-gray-900">Microsoft Surface Pro 7</div>
+                                        <div class="text-sm text-gray-500">SN: MSF-987D</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <div class="text-gray-900"><span class="font-medium text-gray-500">CPU:</span> Intel i5-1035G4</div>
+                                <div class="text-gray-900"><span class="font-medium text-gray-500">RAM:</span> 8 Go LPDDR4x</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">15/01/2020</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                    Dormant
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold">
+                                <a href="#" class="text-indigo-600 hover:text-indigo-900 transition-colors duration-200">Analyser</a>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 
+            4. CTA (Appel à l'action)
+            Exactement comme dans la première version.
+            -->
+            <div class="mt-12 bg-gradient-to-r from-indigo-600 to-purple-700 text-white rounded-xl shadow-2xl p-8">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold">Vos actifs dormants ont de la valeur !</h3>
+                        <p class="mt-2 text-indigo-100 max-w-2xl">
+                            Ne laissez pas votre matériel perdre de la valeur. Notre service "Analyse & Stratégie" estime la valeur marchande, calcule l'impact RSE et vous recommande la meilleure action.
+                        </p>
+                    </div>
+                    <button class="mt-6 md:mt-0 md:ml-6 bg-white text-indigo-700 font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-gray-100 transition duration-300 ease-in-out whitespace-nowrap">
+                        Lancer l'Analyse Complète
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>
+
+
